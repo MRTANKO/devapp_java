@@ -54,6 +54,11 @@ public class MainController {
         return jsonData;
     }*/
 
+    @GetMapping("/api/main") //Контроллер для healthcheck
+    public String mainListner() {
+        return "Service UP";
+    }
+
     @Operation(
             summary = "Добавление новой персоны в базу",
             description = "Получает DTO персоны и билдером собирает и сохраняет сущность в базу",

@@ -1,16 +1,13 @@
 package com.tanko.app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tanko.app.DTO.CatDTO;
-import com.tanko.app.entry.Cat;
-import com.tanko.app.repository.CatRepo;
+import com.tanko.app.DTO.PeopleDTO;
+import com.tanko.app.entry.People;
+import com.tanko.app.repository.PeopleRepo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.List;
 public class MainController {
   /*  @Autowired*/
   /*  private final ObjectMapper objectMapper;*/
-    private final CatRepo catRepo;
+    private final PeopleRepo peopleRepo;
 
 /*
     @GetMapping("/api/main") //Контроллер
@@ -58,49 +55,49 @@ public class MainController {
     }*/
 
     @Operation(
-            summary = "Добавление нового кота в базу",
-            description = "Получает DTO кота и билдером собирает и сохраняет сущность в базу",
-            requestBody =  @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "На вход подаем имя, вес и возвраст кота"
+            summary = "Добавление новой персоны в базу",
+            description = "Получает DTO персоны и билдером собирает и сохраняет сущность в базу",
+            requestBody =  @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "На вход подаем имя, прозвище и дату"
             )
     )
 
     @PostMapping ("/api/add")
-    public void addCat(@RequestBody CatDTO catDTO)
+    public void addPersone(@RequestBody PeopleDTO peopleDTO)
     {
-        log.info("New row: " + catRepo.save(
-                Cat.builder()
-                        .name(catDTO.getName())
-                        .weight(catDTO.getWeight())
-                        .age(catDTO.getAge())
+        log.info("New row: " + peopleRepo.save(
+                People.builder()
+                        .name(peopleDTO.getName())
+                        .nickname(peopleDTO.getNickname())
+                        .birthday(peopleDTO.getBirthday())
                         .build()));
     }
 
     @SneakyThrows
     @GetMapping("/api/all")
-    public List<Cat> getAllCats()
+    public List<People> getAllPeople()
     {
-        return catRepo.findAll();
+        return peopleRepo.findAll();
     }
 
     @GetMapping("/api/find")
-    public Cat getCat(@RequestParam int id)
+    public People getPerson(@RequestParam int id)
         {
-        return catRepo.findById(id).orElse(null);
+        return peopleRepo.findById(id).orElse(null);
         }
 
     @DeleteMapping("/api/delete")
-    public void deleteCat(@RequestParam int id)
+    public void deletePersone(@RequestParam int id)
     {
-        catRepo.deleteById(id);
+        peopleRepo.deleteById(id);
     }
 
     @PutMapping("/api/update")
-       public String updateCat(@RequestBody Cat cat) {
-        if (!catRepo.existsById(cat.getId()))
+       public String updatePersone(@RequestBody People people) {
+        if (!peopleRepo.existsById(people.getId()))
         {
-            return "No such cat";
+            return "No such persone";
         }
-        return catRepo.save(cat).toString();
+        return peopleRepo.save(people).toString();
     }
 
 }

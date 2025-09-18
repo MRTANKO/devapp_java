@@ -5,10 +5,12 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CatDTO {
+public class PeopleDTO {
     String name;
-    int weight;
-    int age;
+    String nickname;
+    Date birthday;
 }

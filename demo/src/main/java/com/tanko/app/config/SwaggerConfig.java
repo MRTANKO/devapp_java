@@ -14,13 +14,12 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI api() {
         return new OpenAPI()
-                .servers(
-                        List.of(
-                                new Server().url("http://localhots:8080")
-                        )
-                )
-                .info(
-                      new Info().title("Our cats API")
-                );
+                .info(new Info()
+                        .title("Swagger API")
+                        .version("1.0")
+                        .description("REST API java"))
+                .servers(List.of(
+                        new Server().url("http://localhost:8080")
+                ));
     }
 }
